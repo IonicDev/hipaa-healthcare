@@ -18,6 +18,8 @@ export interface IRegisterUserParams {
     lastName: string;
 }
 
+export type Groups = 'patients' | 'physicians' | 'insurers';
+
 export class Connection {
     fetchState = (): Promise<IStateResponse> => {
         return fetch('/state').then(response => {
@@ -53,7 +55,7 @@ export class Connection {
                 throw new Error(`Error registering user: ${response.status}: ${response.statusText}`);
             }
             return response.json();
-        }).then(({ assertion, user }) => assertion); // ignore "user" property for now
+        }).then(({ user }) => user);
     }
 
     reset = () => {

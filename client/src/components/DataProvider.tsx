@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 import { Button } from "react-bootstrap";
 import { IPatientDeviceProps } from "../PatientDevice";
 import { Store } from "../Store";
+import ReplyForm from './ReplyForm';
 
 export interface IDataProviderProps {
     store: Store;
@@ -21,9 +22,7 @@ export function WithDataProvider(Component: React.ComponentType<IPatientDevicePr
         renderBody() {
             if (!this.props.model.isActive) {
                 return (
-                    <Button size="lg" onClick={this.props.model.setActive}>
-                        Login
-                    </Button>
+                    <ReplyForm value={this.props.model.email} onFormSubmit={this.props.model.setActive} />
                 );
             } else if (!this.props.model.state) {
                 return "Loading profile and data";
