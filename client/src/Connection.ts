@@ -52,6 +52,9 @@ export class Connection {
             body: JSON.stringify(params)
         }).then(response => {
             if (!response.ok) {
+                if (response.status === 400) {
+                    throw new Error('Email not valid');
+                }
                 throw new Error(`Error registering user: ${response.status}: ${response.statusText}`);
             }
             return response.json();

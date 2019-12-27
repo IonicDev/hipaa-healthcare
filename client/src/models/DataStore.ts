@@ -22,6 +22,8 @@ const ENROLLMENT_URL = process.env.REACT_APP_IONIC_ENROLLMENT_ENDPOINT;
 export class DataStore {
     @observable email?: string;
     @observable state: IStateResponse | null = null;
+    @observable hasUser?: boolean = false;
+    @observable isAuthenticating: boolean = false;
 
     sdk = new IonicAgent({
         userId: this.deviceParams.username,
@@ -33,6 +35,10 @@ export class DataStore {
         return this.store.activeDevice === this.device;
     }
 
+    get authUrl() {
+        return ENROLLMENT_URL;
+    }
+
     constructor(
         private store: Store,
         private device: Device,
@@ -40,29 +46,41 @@ export class DataStore {
     ) {}
 
     @action
-    activate = (email: string) => {
+    registerDevice = (email: string) => {
         this.state = null;
-
-        return this.store.connection
-            .registerUser({
-                email,
-                groupName: this.deviceParams.groupName,
-                firstName: this.deviceParams.firstName,
-                lastName: this.deviceParams.lastName
+        this.email = email;
+        return this.startUsingDevice()
+            .catch(() => {
+                return this.store.connection
+                    .registerUser({
+                        email,
+                        groupName: this.deviceParams.groupName,
+                        firstName: this.deviceParams.firstName,
+                        lastName: this.deviceParams.lastName
+                    })
+                    .then(() => {
+                        this.isAuthenticating = true;
+                        return this.sdk
+                            .register()
+                            .then(() => (this.isAuthenticating = false))
+                            .catch(err => {
+                                this.isAuthenticating = false;
+                                throw err;
+                            });
+                    });
             })
-            .then(() =>
-                Promise.all([
-                    this.store.connection.fetchState(),
-                    this.sdk.loadProfile()
-                ]).then(([state]) => (this.state = state))
-            );
+            .then(this.getState);
     };
 
     @action
-    setActive = (email: string) => {
-        this.email = email;
+    startUsingDevice = () => {
         this.store.setActiveDevice(this.device);
-        return this.activate(email);
+        return this.sdk
+            .loadProfile()
+            .then(() => {
+                this.hasUser = true;
+                return this.getState();
+            })
     };
 
     @action
@@ -104,5 +122,12 @@ export class DataStore {
             .then(() => {
                 if (this.state) this.state.insurer_reply = value;
             });
+    };
+
+    @action
+    getState = () => {
+        this.store.connection.fetchState().then(state => {
+            this.state = state;
+        });
     };
 }

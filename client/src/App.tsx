@@ -5,7 +5,7 @@
 */
 
 import React, { Component } from "react";
-import { Store } from "./Store";
+import { Store, Device } from "./Store";
 import { observer } from "mobx-react";
 import { Container, Row, Button, Col } from "react-bootstrap";
 import PatientDevice from "./PatientDevice";
@@ -14,9 +14,9 @@ import IPhoneCover from "./components/IPhoneCover";
 import { WithDataProvider } from "./components/DataProvider";
 import InsurerDevice from "./InsurerDevice";
 
-const PatientDeviceWithData = WithDataProvider(PatientDevice);
-const PhysicianDeviceWithData = WithDataProvider(PhysicianDevice);
-const InsurerDeviceWithData = WithDataProvider(InsurerDevice);
+const PatientDeviceWithData = WithDataProvider(PatientDevice, Device.Patient);
+const PhysicianDeviceWithData = WithDataProvider(PhysicianDevice, Device.Physician);
+const InsurerDeviceWithData = WithDataProvider(InsurerDevice, Device.Insurer);
 
 @observer
 class App extends Component {

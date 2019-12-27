@@ -16,9 +16,9 @@ export interface IStoreProps {
 const ENROLLMENT_URL = process.env.REACT_APP_IONIC_ENROLLMENT_ENDPOINT;
 
 export enum Device {
-    Patient,
-    Physician,
-    Insurer
+    Patient = 'patient',
+    Physician = 'physician',
+    Insurer = 'insurer'
 }
 
 export class Store {
@@ -55,6 +55,7 @@ export class Store {
     }
 
     reset = () => {
+        localStorage.clear();
         this.connection.reset().then(() => document.location.reload());
     };
 }

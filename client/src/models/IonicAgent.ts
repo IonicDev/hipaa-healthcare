@@ -35,6 +35,7 @@ export class IonicAgent {
     private loadUser(): Promise<void> {
         return this.sdk.loadUser(this.profileInfo)
         .then(response => {
+            console.log('load user responce', response)
             this.profileInfo.deviceId = response.profiles[0].deviceId;
         })
     }
@@ -76,7 +77,7 @@ export class IonicAgent {
                     (err.sdkResponseCode === 40022 || err.sdkResponseCode === 40002)
                 ) {
                     // No SEP exists for the current user
-                    return this.register();
+                    return Promise.reject(err);
                 } else {
                     console.error('Unexpected error loading user %o', err);
                     return Promise.reject(err);
@@ -90,7 +91,14 @@ export class IonicAgent {
                 openCenteredPopup(res.redirect, 'Ionic Client Device Enrollment', 400, 600);
                 return res.notifier;
             })
-            .then(() => this.loadUser())
+            .then(() => {
+                console.log('enroll success');
+                return this.loadUser()
+            }).catch(err => {
+                console.error('enroll error', err);
+                return this.loadUser()
+
+            })
     }
 
     encryptText = this.runWithActiveProfile((plaintext: string, classification: DataClassification) => {
