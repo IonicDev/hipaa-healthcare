@@ -13,8 +13,6 @@ export interface IStoreProps {
     store?: Store;
 }
 
-const ENROLLMENT_URL = process.env.REACT_APP_IONIC_ENROLLMENT_ENDPOINT;
-
 export enum Device {
     Patient = 'patient',
     Physician = 'physician',
@@ -27,7 +25,7 @@ export class Store {
     connection = new Connection();
 
     patientData = new DataStore(this, Device.Patient, {
-        username: "test_patient@healthcaredemo.com",
+        username: "test_patient",
         password: "password123",
         firstName: "Test",
         groupName: "patients",
