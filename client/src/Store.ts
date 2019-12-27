@@ -14,9 +14,9 @@ export interface IStoreProps {
 }
 
 export enum Device {
-    Patient = 'patient',
-    Physician = 'physician',
-    Insurer = 'insurer'
+    Patient = "patient",
+    Physician = "physician",
+    Insurer = "insurer"
 }
 
 export class Store {

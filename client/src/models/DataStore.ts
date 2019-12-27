@@ -76,7 +76,7 @@ export class DataStore {
     startUsingDevice = () => {
         this.store.setActiveDevice(this.device);
         return this.sdk
-            .loadProfile()
+            .loadUser()
             .then(() => {
                 this.hasUser = true;
                 return this.getState();

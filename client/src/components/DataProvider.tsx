@@ -36,7 +36,7 @@ export function WithDataProvider(
                 return (
                     <p>
                         Authenticate as <b>{deviceModel.email}</b> in the Ionic
-                        Auth popup. If the popup doesn't show, you can
+                        Auth popup. If the popup doesn't show, you can {" "}
                         <a href={deviceModel.authUrl} target="_blank">
                             authenticate here
                         </a>
@@ -57,7 +57,7 @@ export function WithDataProvider(
                     >
                         <p>
                             Enter valid e-mail for a {device}. (You can use
-                            services like
+                            services like {" "}
                             <a
                                 href="https://www.mailinator.com/"
                                 target="_blank"
