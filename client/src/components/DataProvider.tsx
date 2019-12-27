@@ -35,11 +35,12 @@ export function WithDataProvider(
             if (deviceModel.isAuthenticating) {
                 return (
                     <p>
-                        Authenticate as <b>{deviceModel.email}</b> in Ionic Auth
-                        popup. If popup doesn't shown{" "}
+                        Authenticate as <b>{deviceModel.email}</b> in the Ionic
+                        Auth popup. If the popup doesn't show, you can
                         <a href={deviceModel.authUrl} target="_blank">
-                            you can authenticate here
+                            authenticate here
                         </a>
+                        .
                     </p>
                 );
             }
@@ -55,8 +56,8 @@ export function WithDataProvider(
                         onFormSubmit={deviceModel.registerDevice}
                     >
                         <p>
-                            Enter valid {device} email. (You can use service
-                            like{" "}
+                            Enter valid e-mail for a {device}. (You can use
+                            services like
                             <a
                                 href="https://www.mailinator.com/"
                                 target="_blank"
@@ -65,11 +66,12 @@ export function WithDataProvider(
                             </a>
                             ).
                         </p>
-                        <p>Emails should be different.</p>
+                        <p>Each device should have a different e-mail.</p>
                         <p>
-                            We create user with that email on backend, assign it
-                            to {device} group. You need to authenticate this
-                            user in Ionic Auth.
+                            On the backend, we create a user with this e-mail
+                            address and assign it to the {device} group. You'll
+                            need to enter this e-mail later in the Ionic Auth to
+                            authenticate this user.
                         </p>
                     </ReplyForm>
                 );
