@@ -13,12 +13,10 @@ declare module 'ionic-js-sdk' {
         deviceId?: string;
     }
 
-    export interface IProfileInfoWithSamlAssertion implements IProfileInfo {
-        samlAssertionXml: string;
-    }
-
     export interface ISdkResponse {
         sdkResponseCode: number;
+        redirect: string;
+        notifier: Promise<void>;
     }
 
     export interface IChunkCipherInput {

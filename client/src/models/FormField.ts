@@ -20,7 +20,8 @@ export interface IFormField<T = string> {
 
 export default class FormField implements IFormField {
     @observable inputValue: string = '';
-    ref = React.createRef<HTMLInputElement>()
+    @observable error: string | null = null;
+    ref = React.createRef<any>()
 
 	constructor(public defaultValue: string = '') {
 		this.inputValue = defaultValue;
@@ -30,7 +31,7 @@ export default class FormField implements IFormField {
 	get value() {
 		return this.inputValue.trim();
     }
-    
+
 	@action.bound
 	handleChange(value: string) {
 		this.inputValue = value;
@@ -50,8 +51,8 @@ export default class FormField implements IFormField {
 	clear() {
 		this.inputValue = '';
     }
-    
-    invalidate(error: string) {
-        if (this.ref.current) this.ref.current.setCustomValidity(error);
+
+    invalidate(error: string | null) {
+       this.error = error;
     }
 }

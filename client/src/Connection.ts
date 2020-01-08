@@ -18,6 +18,8 @@ export interface IRegisterUserParams {
     lastName: string;
 }
 
+export type Groups = 'patients' | 'physicians' | 'insurers';
+
 export class Connection {
     fetchState = (): Promise<IStateResponse> => {
         return fetch('/state').then(response => {
@@ -50,10 +52,13 @@ export class Connection {
             body: JSON.stringify(params)
         }).then(response => {
             if (!response.ok) {
+                if (response.status === 400) {
+                    throw new Error('Email not valid');
+                }
                 throw new Error(`Error registering user: ${response.status}: ${response.statusText}`);
             }
             return response.json();
-        }).then(({ assertion, user }) => assertion); // ignore "user" property for now
+        }).then(({ user }) => user);
     }
 
     reset = () => {

@@ -1,8 +1,8 @@
 /**
-* (c) 2019 Ionic Security Inc.  All rights reserved.
-* By using this code, I agree to the Privacy Policy (https://www.ionic.com/privacy-notice/),
-* and the License Agreement (https://dev.ionic.com/license).
-*/
+ * (c) 2019 Ionic Security Inc.  All rights reserved.
+ * By using this code, I agree to the Privacy Policy (https://www.ionic.com/privacy-notice/),
+ * and the License Agreement (https://dev.ionic.com/license).
+ */
 
 import { observable, action } from "mobx";
 import { Connection } from "./Connection";
@@ -13,12 +13,10 @@ export interface IStoreProps {
     store?: Store;
 }
 
-const ENROLLMENT_URL = process.env.REACT_APP_IONIC_ENROLLMENT_ENDPOINT;
-
 export enum Device {
-    Patient,
-    Physician,
-    Insurer
+    Patient = "patient",
+    Physician = "physician",
+    Insurer = "insurer"
 }
 
 export class Store {
@@ -26,48 +24,28 @@ export class Store {
 
     connection = new Connection();
 
-    patientSdk = new IonicAgent({
+    patientData = new DataStore(this, Device.Patient, {
         username: "test_patient",
         password: "password123",
-        enrollmentUrl: ENROLLMENT_URL,
-        fetchSamlAssertion: () =>
-            this.connection.registerUser({
-                email: "test_patient@healthcaredemo.com",
-                groupName: "patients",
-                firstName: "Test",
-                lastName: "Patient"
-            })
+        firstName: "Test",
+        groupName: "patients",
+        lastName: "Patient"
     });
-
-    physician = new IonicAgent({
+    physicianData = new DataStore(this, Device.Physician, {
         username: "test_physician",
         password: "password123",
-        enrollmentUrl: ENROLLMENT_URL,
-        fetchSamlAssertion: () =>
-            this.connection.registerUser({
-                email: "test_physician@healthcaredemo.com",
-                groupName: "physicians",
-                firstName: "Test",
-                lastName: "Physician"
-            })
+        groupName: "physicians",
+        firstName: "Test",
+        lastName: "Physician"
     });
 
-    insurer = new IonicAgent({
+    insurerData = new DataStore(this, Device.Insurer, {
         username: "test_insurer",
         password: "password123",
-        enrollmentUrl: ENROLLMENT_URL,
-        fetchSamlAssertion: () =>
-            this.connection.registerUser({
-                email: "test_insurer@healthcaredemo.com",
-                groupName: "insurers",
-                firstName: "Test",
-                lastName: "Insurer"
-            })
+        groupName: "insurers",
+        firstName: "Test",
+        lastName: "Insurer"
     });
-
-    patientData = new DataStore(this, this.patientSdk, Device.Patient);
-    physicianData = new DataStore(this, this.physician, Device.Physician);
-    insurerData = new DataStore(this, this.insurer, Device.Insurer);
 
     @action.bound
     setActiveDevice(device: Device) {
@@ -75,6 +53,7 @@ export class Store {
     }
 
     reset = () => {
+        localStorage.clear();
         this.connection.reset().then(() => document.location.reload());
     };
 }

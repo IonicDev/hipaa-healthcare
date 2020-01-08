@@ -21,10 +21,7 @@ dotenv.config();
 // check required environment variables
 function validateConfig() {
     const requiredVars = [
-        'IONIC_IDP_ENTITY_ID',
-        'IONIC_ASSERTION_CONSUMER_SERVICE',
         'IONIC_ENROLLMENT_ENDPOINT',
-        'IONIC_IDP_PRIVATE_KEY_PATH',
         'IONIC_API_BASE_URL',
         'IONIC_TENANT_ID',
         'IONIC_API_AUTH_TOKEN',
@@ -94,24 +91,7 @@ app.post(
       return;
     }
 
-    debug('generating SAML assertion');
-    let samlResponse;
-    try {
-      samlResponse = buildSamlResponse({
-        privateKey: readFileSync(process.env.IONIC_IDP_PRIVATE_KEY_PATH, 'utf8'),
-        userEmail: email,
-        recipientUrl: process.env.IONIC_ENROLLMENT_ENDPOINT,
-        recipientName: process.env.IONIC_ASSERTION_CONSUMER_SERVICE,
-        issuer: process.env.IONIC_IDP_ENTITY_ID
-      });
-      debug('assertion generated');
-    } catch (err) {
-      debug('error sending SAML assertion: %o', err);
-      res.status(500).json({ error: err.message });
-      return;
-    }
-
-    res.status(200).json({ assertion: samlResponse, user });
+    res.status(200).json({ user });
   }
 );
 
