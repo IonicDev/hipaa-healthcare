@@ -1,15 +1,12 @@
 # Ionic Healthcare Demo
 
-The Demo App is a simple web application that illustrates how distinct roles within a customer's application can be defined and used to restrict ePHI access in a HIPAA-compliant manner. The Demo App is based on use case involving a hypothetical business scenario involving a patient, physician and insurance provider. Read more in our [quickstart guide](https://virgil.atlassian.net/wiki/spaces/VI/pages/1079083143/Healthcare+Quickstart+Guide?atlOrigin=eyJpIjoiZWI0MWNiNzVhMWVkNDNkZmEzMzJkNTE2ZmEwYmZmOWMiLCJwIjoiYyJ9).
+The Demo App is a simple web application that illustrates how distinct roles within a customer's application can be defined and used to restrict ePHI access in a HIPAA-compliant manner. The Demo App is based on use case involving a hypothetical business scenario involving a patient, physician and insurance provider. Read more in our [quickstart guide](https://ionic.com/developers/hipaa-example-application-setup/).
 
 ## Prerequisites
 - Node.js >= 10 is required
-- Ionic and AWS credentials
+- A Machina account with administrator credentials. (If you do not yet have an account, you can create one by selecting [Start for Free](https://ionic.com/start-for-free/).)
+- An AWS account with API key access
 - Supported browsers: Chrome, Firefox, Safari, Opera.
-
-### Ionic credentials
-- [Create and configure an Ionic Account](https://virgil.atlassian.net/wiki/spaces/VI/pages/1079083092/Create+and+Configure+Ionic+Account)
-- [Configure the Ionic Enrollment service to support a SAML Assertions](https://virgil.atlassian.net/wiki/spaces/VI/pages/1107263521/Configuring+an+Enrollment+Server+to+Support+a+SAML+Assertions)
 
 ### AWS credentials
 1. Create an [AWS account](https://portal.aws.amazon.com/billing/signup) to store your app's encrypted data
@@ -19,7 +16,7 @@ The Demo App is a simple web application that illustrates how distinct roles wit
 
 - Clone the Demo application:
 ```
-git clone https://github.com/VirgilSecurity/ionic-demo-healthcare.git
+git clone https://github.com/IonicDev/hipaa-healthcare.git
 ```
 
 - Using the command line interface, copy the file `.env.example` under the name `.env`:
@@ -41,6 +38,8 @@ copy .env.example .env
 | AWS_ACCESS_KEY_ID | Your AWS Access Key ID. This is read by the `aws-sdk` to authenticate requests to DynamoDB |
 | AWS_SECRET_ACCESS_KEY | Your AWS Access Secret Key. This is read by the `aws-sdk` to authenticate requests to DynamoDB |
 
+Details on creating and obtaining these values can be found in our [quickstart guide](https://ionic.com/developers/hipaa-example-application-setup/).
+
 - Install dependencies:
 
 ```
@@ -52,9 +51,9 @@ npm install
 npm run setup
 ```
 
-- The `setup` script created three groups in Ionic Dashboard: _Patients_, _Physicians_ and _Insurers_.
+- The `setup` script created three groups in Machina Dashboard: _Patients_, _Physicians_ and _Insurers_.
 
-> The "setup" script also created Ionic _Data Marking Values_ and  _Data Policies_ in Ionic Dashboard. To learn more about groups, data markings and data policies, explore the Quickstart guide.
+> The "setup" script also created Machina _Data Marking Values_ and  _Data Policies_ in Machina Dashboard. To learn more about groups, data markings and data policies, explore the Quickstart guide.
 
 
 -  Run the Demo with the following command:
@@ -62,4 +61,4 @@ npm run setup
 ```
 npm start
 ```
-- Browse to http://localhost:8080 to explore the Demo and see how the Ionic Policy Engine can be used to grant data access via encryption keys to users based on the Data Policy logic.
+- Browse to http://localhost:8080 to explore the Demo and see how the Machina Policy Engine can be used to grant data access via encryption keys to users based on the Data Policy logic.
