@@ -32,9 +32,8 @@ declare module 'ionic-js-sdk' {
 
     export class ISAgent {
         constructor(sourceUrl?: string);
-        enrollUser(profileInfo: IProfileInfo): Promise<ISdkResponse>;
-        enrollUserWithSamlAssertion(profileInfo: IProfileInfoWithSamlAssertion): Promise<ISdkResponse>;
-        loadUser(profileInfo: IProfileInfo): Promise<ISdkResponse & { profiles: ({ deviceId: string})[] }>;
+        enrollUser(profileInfo: IProfileInfo): Promise<(EnrollmentConfirmation|SdkErrorResponse)>;
+        loadUser(profileInfo: IProfileInfo): Promise<(QueryProfilesResult|SdkErrorResponse)>;
         createDevice(ionicAssertion: object): Promise<ISdkResponse>;
         encryptStringChunkCipher(input: IChunkCipherInput): Promise<IChunkCipherOutput>;
         decryptStringChunkCipher(input: IChunkCipherInput): Promise<IChunkCipherOutput>;

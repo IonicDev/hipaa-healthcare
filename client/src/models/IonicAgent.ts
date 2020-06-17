@@ -92,7 +92,7 @@ export class IonicAgent {
             }
         })
         .then(res => res.stringChunk);
-    })
+    });
 
     decryptText = this.runWithActiveProfile((ciphertext: string) => {
         return this.sdk.decryptStringChunkCipher({stringData: ciphertext})

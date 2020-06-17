@@ -37,7 +37,7 @@ export function WithDataProvider(
                     <p>
                         Authenticate as <b>{deviceModel.email}</b> in the Ionic
                         Auth popup. If the popup doesn't show, you can {" "}
-                        <a href={deviceModel.authUrl} target="_blank">
+                        <a href={deviceModel.authUrl} target="_blank" rel="noopener noreferrer">
                             authenticate here
                         </a>
                         .
@@ -61,6 +61,7 @@ export function WithDataProvider(
                             <a
                                 href="https://www.mailinator.com/"
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 Mailinator
                             </a>
